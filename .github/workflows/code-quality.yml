@@ -5,6 +5,8 @@ jobs:
   Setup-uv:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v5
+
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v7
         with:
