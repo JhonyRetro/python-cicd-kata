@@ -1,0 +1,53 @@
+name: code-quality.yml
+on: [pull_request]
+
+jobs:
+  check-linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-uv-environment
+
+      - name: Run linter
+        run: uv run ruff check --fix .
+        shell: bash
+
+  check-formatter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-uv-environment
+
+      - name: Run formatter
+        run: uv run ruff format .
+        shell: bash
+
+  check-type-safety:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-uv-environment
+
+      - name: Run typechecks
+        run: uv run pyright
+        shell: bash
+
+
+  run-unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-uv-environment
+
+      - name: Run tests
+        run: uv run pytest tests
+        shell: bash
+
