@@ -1,0 +1,21 @@
+name: actions
+author: jhonyretro
+description: setup uv environment
+runs:
+  using: 'composite'
+  steps:
+      - uses: actions/checkout@v5
+
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          version: '0.9.14'
+          enable-cache: 'true'
+
+      - name: Set up Python
+        run: uv python install
+        shell: bash
+
+      - name: Install the project
+        run: uv sync --locked --all-extras --dev
+        shell: bash
