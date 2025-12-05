@@ -2,37 +2,24 @@ name: code-quality.yml
 on: [pull_request]
 
 jobs:
-  Setup-uv-and-python:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Install the latest version of uv
-        uses: astral-sh/setup-uv@v7
-        with:
-          version: '0.9.14'
-
-      - name: Set up Python
-        run: uv python install
-
-      - name: Install the project
-        run: uv sync --locked --all-extras --dev
-
   check-linter:
     runs-on: ubuntu-latest
     steps:
+      - uses: ./.github/actions/setup-uv-environment
       - name: Run linter
         run: uv run ruff check --fix .
 
   check-formatter:
     runs-on: ubuntu-latest
     steps:
+      - uses: .github/actions/setup-uv-environment
       - name: Run formatter
         run: uv run ruff format .
 
   check-type-safety:
     runs-on: ubuntu-latest
     steps:
+      - uses: ./.github/actions/setup-uv-environment
       - name: Run typechecks
         run: uv run pyright
 
@@ -40,6 +27,7 @@ jobs:
   run-unit-tests:
     runs-on: ubuntu-latest
     steps:
+      - uses: ./.github/actions/setup-uv-environment
       - name: Run tests
         run: uv run pytest tests
 
