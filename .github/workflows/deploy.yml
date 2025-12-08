@@ -7,16 +7,16 @@ jobs:
 
   push-to-registry:
     runs-on: ubuntu-latest
+    env:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      DOCKERHUB_REPO: ${{ vars.DOCKERHUB_REPO }}
     needs: code-quality
     steps:
       - uses: actions/checkout@v5
 
       - name: Build and Push to Docker Hub
         uses: ./.github/actions/build-and-push
-        with:
-          dockerhub_username: ${{ vars.DOCKERHUB_USERNAME }}
-          dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
-          dockerhub_repo: ${{ vars.DOCKERHUB_REPO }}
 
   deploy:
     runs-on: ubuntu-latest
