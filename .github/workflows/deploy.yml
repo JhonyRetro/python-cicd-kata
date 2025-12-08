@@ -32,4 +32,4 @@ jobs:
     needs: push-to-registry
     steps:
       - name: Deploy to Render
-        run: curl "${{ secrets.RENDER_WEBHOOK_URL }}&imgURL=docker.io%2F${{ vars.DOCKERHUB_USERNAME }}%2Fpython-cicd-kata%3Alatest"
+        run: curl "${{ secrets.RENDER_WEBHOOK_URL }}&imgURL=docker.io%2F${{ vars.DOCKERHUB_REPO }}%3Alatest"
